@@ -1,1 +1,42 @@
+from helper import *
+from random import randrange, choice, randint
+
+# read 'states' available in current folder
+states = get_states()
+# get 6 digit mobile number,
+# 4 digit (Operator), 2 digit state code
+all_state_operators = generate_state_operator_numbers()
+
+#print(all_state_operators)
+
+months = range(1, 13)
+dates = range(1, 31)
+years = range(2014, 2020)
+
+# iterate over 1 to 31
+for date in dates:
+    # convert to string
+    date = convert_to_str(date)
+    for month in months:
+        month = convert_to_str(month)
+        for year in years:
+            year = convert_to_str(year)
+            # construct filename
+            # Ex: 26052019.csv
+            filename = date + month + year + '.csv'
+            # full file path will be logs/26052019.csv
+            fw = create_file(filename, "logs")
+            # loop over 1000 times to create fake data
+            for i in range(1000):
+                for i in range(3):
+                    # get one operator number randomly
+                    operator = choice(all_state_operators)
+                    # generate any number between -30 to 30
+                    call = str(randint(-30, 30))
+                    # construct full 10 digit mobile number
+                    mobile = operator + str(randrange(1000, 9999))
+                    # write 9900334225:-20 formatted string to file
+                    fw.write(mobile + ":" + call + " ")
+                fw.write("\n")
+            fw.close()
 
